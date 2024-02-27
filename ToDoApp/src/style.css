@@ -1,3 +1,13 @@
+:root {
+  --main-blue: rgb(35, 87, 137);
+  --main-dark: rgb(18, 38, 58);
+  --secondary-blue: rgb(39, 101, 160);
+  --secondary-dark: rgb(24, 49, 75);
+  --accent: rgb(184, 201, 200);
+  --danger: rgb(236, 43, 43);
+  --checked: rgb(81, 190, 100);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -20,6 +30,7 @@ body {
 }
 .section {
   margin: 1rem 3rem;
+  padding: 0 1rem;
 }
 .section-header {
   flex: 0 0 100px;
@@ -35,9 +46,9 @@ body {
 
 /* ---------------- Style for Controller ------------ */
 .todo-controller {
-  background-color: rgb(207, 211, 219);
+  background-color: var(--main-dark);
   width: 200px;
-  color: rgb(55, 75, 104);
+  color: var(--accent);
 }
 /* --------------- Controller Header ----------*/
 .todo-controller-header {
@@ -48,20 +59,54 @@ body {
 }
 
 /* ---------------- Controller Main ------------*/
+.todo-controller-main {
+  margin: 1rem 1rem;
+}
 .todo-controller-main ul {
   list-style: none;
   padding: 2rem 0;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--accent);
 }
 .todo-controller-main ul li {
+  width: 100%;
   padding: 0.5rem 0;
+  display: flex;
+}
+.todo-controller-main ul li label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.todo-controller-form {
+  display: flex;
+  margin: 1rem;
+  padding: 0;
+}
+
+.todo-controller-form input {
+  width: 150px;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  background-color: var(--secondary-dark);
+  color: var(--accent);
+  outline: none;
+  margin-right: 1rem;
+}
+.todo-controller-form button {
+  flex: 0 1 30px;
+  background-color: var(--secondary-dark);
+  border: none;
+  color: grey;
+  border-radius: 5px 0 0 5px;
 }
 
 /* --------------- Style for Todo App ----------*/
 .todo-main {
   flex-grow: 1;
-  background-image: url("./assetts/sunset-1373171_1280.jpg");
-  background-size: cover;
+  background-image: url("./assetts/pexels-pixabay-164175.jpg");
+  background-size: fit;
   background-position: center;
 }
 
@@ -75,24 +120,61 @@ body {
   width: 10px;
 }
 .todo-main-list::-webkit-scrollbar-thumb {
-  background: rgb(31, 42, 58);
+  background: var(--main-blue);
   border-radius: 10px;
 }
 .todo-main-list ul {
   list-style: none;
 }
 .todo-main-list li {
-  padding: 1rem 1rem;
+  display: flex;
+  padding: 0.5rem 1rem;
   margin-bottom: 1rem;
-  background-color: rgb(207, 211, 219);
+  background-color: var(--main-dark);
   border-radius: 5px;
-  color: rgb(55, 75, 104);
+  border: 1px solid var(--main-blue);
+  color: var(--accent);
+}
+.todo-main-list li:hover {
+  background-color: var(--secondary-dark);
+  border-color: var(--secondary-blue);
+}
+
+.todo-main-list li label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.todo-main-list li label input[type="checkbox"] {
+  display: none;
+}
+
+.todo-main-list li label p {
+  flex: 1 1 auto;
+}
+
+.todo-main-list li label input[type="checkbox"]:checked + p {
+  text-decoration: line-through;
+  color: var(--checked);
+}
+.remove-btn {
+  flex: 0 1 50px;
+  padding: 0.6rem;
+  background-color: transparent;
+  border: none;
+  color: var(--main-blue);
+}
+.remove-btn:hover {
+  color: var(--danger);
 }
 
 /* --------------- Todo Footer ----------*/
+
 .todo-main-form {
   display: flex;
   align-items: center;
+  margin-bottom: 4rem;
 }
 .todo-main-form input,
 button {
@@ -104,8 +186,8 @@ button {
   flex-grow: 1;
   border: none;
   border-radius: 0 5px 5px 0;
-  background-color: rgb(207, 211, 219);
-  color: rgb(55, 75, 104);
+  background-color: var(--main-dark);
+  color: var(--accent);
   outline: none;
   margin-right: 1rem;
 }
@@ -113,11 +195,11 @@ button {
 /* --------------- Bottons Style ----------*/
 .btn {
   border: none;
-  background-color: rgb(207, 211, 219);
-  color: rgb(55, 75, 104);
+  background-color: var(--main-dark);
+  color: var(--accent);
 }
 .btn-add {
   flex: 0 1 50px;
-  color: rgb(55, 75, 104);
+  color: grey;
   border-radius: 5px 0 0 5px;
 }

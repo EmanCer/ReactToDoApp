@@ -1,9 +1,12 @@
+import { useState } from "react";
+import TodoItem from "./TodoItem";
+import AddTaskForm from "./AddTaskForm";
+
 export default function TodoList() {
   const date = Date().slice(0, 15);
+  const [task, setTask] = useState([]);
+  const [inputValue, setInputValue] = useState("");
 
-  const handleClick = function (e) {
-    console.log(e.target);
-  };
   return (
     <div className="wrapper todo-main">
       <div className="section section-header todo-main-header">
@@ -11,21 +14,14 @@ export default function TodoList() {
         <p>{date.slice(0, 15)}</p>
       </div>
       <div className="section section-main todo-main-list">
-        <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-        </ul>
+        <TodoItem task={task} setTask={setTask} />
       </div>
-      <div className="section section-footer todo-main-form">
-        <button type="submit" className="btn btn-add" onClick={handleClick}>
-          +
-        </button>
-        <input className="add-input" type="text" placeholder="Add a task" />
-      </div>
+      <AddTaskForm
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        task={task}
+        setTask={setTask}
+      />
     </div>
   );
 }
