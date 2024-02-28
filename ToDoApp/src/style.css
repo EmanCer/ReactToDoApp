@@ -72,11 +72,15 @@ body {
   padding: 0.5rem 0;
   display: flex;
 }
-.todo-controller-main ul li label {
+.todo-controller-main ul li {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: 3rem;
+}
+.todo-controller-main ul li button i {
+  font-size: 1.3rem;
 }
 
 .todo-controller-form {
@@ -150,8 +154,11 @@ body {
   display: none;
 }
 
-.todo-main-list li label p {
+.todo-main-list li label #task {
   flex: 1 1 auto;
+}
+.todo-main-list li label #list {
+  color: var(--secondary-blue);
 }
 
 .todo-main-list li label input[type="checkbox"]:checked + p {
@@ -174,18 +181,33 @@ body {
 .todo-main-form {
   display: flex;
   align-items: center;
-  margin-bottom: 4rem;
+  margin: 0;
+  padding: 3rem 2rem;
+  background-color: rgba(51, 102, 156, 0.15);
 }
 .todo-main-form input,
-button {
+button,
+select {
   font-size: 1.5rem;
   padding: 1rem 1rem;
+  margin: 0;
+  height: 4rem;
+  box-sizing: border-box;
+}
+.todo-main-form select {
+  border: none;
+
+  background-color: var(--main-dark);
+  color: var(--accent);
+  font-family: "Barlow", sans-serif;
+}
+select {
+  border-radius: 0 5px 5px 0;
 }
 
 .add-input {
   flex-grow: 1;
   border: none;
-  border-radius: 0 5px 5px 0;
   background-color: var(--main-dark);
   color: var(--accent);
   outline: none;
