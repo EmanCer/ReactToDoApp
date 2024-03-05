@@ -23,114 +23,116 @@ body {
   font-size: 1.6rem;
 }
 
-.container {
-  display: flex;
+/* ------- Container Style --------- */
+.wrapper {
   width: 100%;
   height: 100vh;
+  display: flex;
 }
-.section {
-  margin: 1rem 3rem;
-  padding: 0 1rem;
-}
-.section-header {
-  flex: 0 0 100px;
-}
-.section-main {
-  flex: 1 1 auto;
-}
-.wrapper {
+
+/* ------- Lists Component Style --------- */
+.lists-component {
+  flex: 0 0 20%;
+  position: relative;
   display: flex;
   flex-direction: column;
-  height: 100%;
-}
-
-/* ---------------- Style for Controller ------------ */
-.todo-controller {
   background-color: var(--main-dark);
-  width: 200px;
   color: var(--accent);
+  padding: 3rem 0 0 1rem;
 }
-/* --------------- Controller Header ----------*/
-.todo-controller-header {
+
+.lists-component-main {
+  flex: 1;
+  overflow: scroll;
+}
+
+.lists-component-header {
   text-align: center;
+  flex: 0 0 auto;
+  height: 100px;
 }
-.todo-controller-header img {
-  width: 30px;
+.lists-component-header img {
+  width: 50px;
 }
 
-/* ---------------- Controller Main ------------*/
-.todo-controller-main {
-  margin: 1rem 1rem;
-}
-.todo-controller-main ul {
+.lists-component-main ul {
   list-style: none;
-  padding: 2rem 0;
-  border-bottom: 1px solid var(--accent);
+  padding: 2rem 0.5rem;
 }
-.todo-controller-main ul li {
-  width: 100%;
-  padding: 0.5rem 0;
+.lists-component-main ul li {
   display: flex;
-}
-.todo-controller-main ul li {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  justify-content: space-between;
+
   height: 3rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid var(--secondary-blue);
+  margin-bottom: 0.5rem;
 }
-.todo-controller-main ul li button i {
-  font-size: 1.3rem;
+.lists-component-main ul li div {
+  width: 100%;
+}
+.lists-component-main ul li:hover {
+  background-color: var(--secondary-dark);
+}
+.lists-component-main u li p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lists-component-main ul li button {
+  flex-shrink: 0;
+  text-align: end;
 }
 
-.todo-controller-form {
+.lists-component-form {
+  flex: 0 0 auto;
   display: flex;
-  margin: 1rem;
-  padding: 0;
+  margin: 0 1rem 3rem 0;
+  border-top: 1px solid var(--secondary-blue);
 }
 
-.todo-controller-form input {
-  width: 150px;
+.lists-component-form input {
+  flex: 1;
   border: none;
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 0 10px 0;
   background-color: var(--secondary-dark);
   color: var(--accent);
   outline: none;
-  margin-right: 1rem;
 }
-.todo-controller-form button {
-  flex: 0 1 30px;
+.lists-component-form button {
   background-color: var(--secondary-dark);
   border: none;
   color: grey;
-  border-radius: 5px 0 0 5px;
+  border-radius: 0 0 0 10px;
+  padding: 1rem;
 }
 
-/* --------------- Style for Todo App ----------*/
-.todo-main {
-  flex-grow: 1;
-  background-image: url("./assetts/pexels-pixabay-164175.jpg");
-  background-size: fit;
+/* ------- Tasks Component Style --------- */
+.tasks-component {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-image: url("./assetts/img/pexels-pixabay-164175.jpg");
+  background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
-/* --------------- Todo Main ----------*/
-.todo-main-list {
+.tasks-component-header {
+  padding: 2rem 2rem;
+  text-align: end;
+}
+.tasks-component-main {
+  flex: 1;
+  padding: 2rem 1rem;
   margin-top: 2rem;
   overflow-y: scroll;
 }
-.todo-main-list::-webkit-scrollbar {
-  background: none;
-  width: 10px;
-}
-.todo-main-list::-webkit-scrollbar-thumb {
-  background: var(--main-blue);
-  border-radius: 10px;
-}
-.todo-main-list ul {
-  list-style: none;
-}
-.todo-main-list li {
+.tasks-component-main li {
   display: flex;
   padding: 0.5rem 1rem;
   margin-bottom: 1rem;
@@ -139,32 +141,99 @@ body {
   border: 1px solid var(--main-blue);
   color: var(--accent);
 }
-.todo-main-list li:hover {
+.tasks-component-main li:hover {
   background-color: var(--secondary-dark);
   border-color: var(--secondary-blue);
 }
-
-.todo-main-list li label {
+.tasks-component-main li label {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 }
-.todo-main-list li label input[type="checkbox"] {
+.tasks-component-main li label input[type="checkbox"] {
   display: none;
 }
-
-.todo-main-list li label #task {
+.tasks-component-main li label #task {
   flex: 1 1 auto;
 }
-.todo-main-list li label #list {
+.tasks-component-main li label #list {
   color: var(--secondary-blue);
 }
-
-.todo-main-list li label input[type="checkbox"]:checked + p {
+.tasks-component-main li label p {
+  overflow: hidden;
+}
+.tasks-component-main li label .active {
   text-decoration: line-through;
   color: var(--checked);
 }
+
+.tasks-component-form {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 1rem 2rem 3rem 2rem;
+  background-color: rgba(51, 102, 156, 0.15);
+}
+.tasks-component-form input {
+  border: none;
+  background-color: var(--main-dark);
+  padding: 1rem;
+  flex: 1;
+  color: var(--accent);
+  outline: none;
+}
+
+.btn {
+  background-color: var(--main-dark);
+  border: none;
+  color: gray;
+  border-radius: 10px 0 0 10px;
+  padding: 1rem;
+}
+
+.tasks-components-dropdown {
+  flex: 0 1 10%;
+  padding: 0.8rem;
+  border-radius: 0 5px 5px 0;
+  background-color: var(--main-dark);
+  color: grey;
+  font-family: "Barlow", sans-serif;
+}
+.tasks-components-dropdown ul {
+  list-style: none;
+}
+.tasks-components-dropdown .dropdown-btn {
+  text-align: center;
+}
+.tasks-components-dropdown .dropdown-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  background-color: var(--main-dark);
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  text-align: center;
+  z-index: 2;
+  overflow: scroll;
+}
+.tasks-components-dropdown .dropdown-content .dropdown-content-header {
+  font-size: 2rem;
+  color: var(--accent);
+  padding: 2rem;
+}
+.tasks-components-dropdown .dropdown-content li {
+  padding: 10px;
+  cursor: pointer;
+}
+.tasks-components-dropdown .dropdown-content li:hover {
+  background-color: var(--secondary-dark);
+}
+/* -------- Apperance of Buttons */
 .remove-btn {
   flex: 0 1 50px;
   padding: 0.6rem;
@@ -175,53 +244,84 @@ body {
 .remove-btn:hover {
   color: var(--danger);
 }
+.toggle-button {
+  background-color: transparent;
+  border: none;
+  color: var(--accent);
+  display: none;
+  z-index: 1;
+}
+/* ------- Appereance of Scrollbars */
+.scrollbar::-webkit-scrollbar {
+  background: transparent;
+  width: 3px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background: var(--main-blue);
+  border-radius: 5px;
+}
+.scrollbar::-webkit-scrollbar-corner {
+  display: none;
+}
+@media screen and (max-width: 700px) {
+  .lists-component {
+    display: none;
+  }
+  .lists-component.active {
+    display: flex;
+    flex: 1;
+  }
 
-/* --------------- Todo Footer ----------*/
+  .tasks-component.inactive {
+    flex: 0;
+    width: 0;
+    overflow: hidden;
+  }
+  .toggle-button {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .lists-component {
+    flex-basis: 10%;
+  }
+}
 
-.todo-main-form {
+/* ------- Login initial page Style --------- */
+.login {
   display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--main-dark);
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin: 0;
-  padding: 3rem 2rem;
-  background-color: rgba(51, 102, 156, 0.15);
+  width: 70%;
+  margin: 30vh auto;
 }
-.todo-main-form input,
-button,
-select {
-  font-size: 1.5rem;
-  padding: 1rem 1rem;
-  margin: 0;
-  height: 4rem;
-  box-sizing: border-box;
+.login-form h1 {
+  font-size: 6rem;
+  font-family: "Dancing Script", cursive;
+  margin-bottom: 2rem;
 }
-.todo-main-form select {
-  border: none;
-
-  background-color: var(--main-dark);
-  color: var(--accent);
-  font-family: "Barlow", sans-serif;
+.login-form h3 {
+  margin-bottom: 2rem;
 }
-select {
-  border-radius: 0 5px 5px 0;
+.login-form button {
+  margin: 1rem;
+  border: 1px solid var(--secondary-blue);
+  border-radius: 5px;
+  padding: 1rem 3rem;
 }
-
-.add-input {
-  flex-grow: 1;
-  border: none;
-  background-color: var(--main-dark);
-  color: var(--accent);
-  outline: none;
-  margin-right: 1rem;
-}
-
-/* --------------- Bottons Style ----------*/
-.btn {
-  border: none;
-  background-color: var(--main-dark);
-  color: var(--accent);
-}
-.btn-add {
-  flex: 0 1 50px;
-  color: grey;
-  border-radius: 5px 0 0 5px;
+.login-form button:hover {
+  background-color: var(--secondary-dark);
 }

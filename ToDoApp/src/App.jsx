@@ -1,18 +1,88 @@
+/*  ---------- I have designed this Todo app to locally store user tasks as well as create dedicated lists to keep tasks organized.
+
+  The project was an opportunity to familiarize myself with the basic concepts of React, and I tried to give a typical TodoApp more complexity, responsiveness, and an appealing style. ---------- */
+
 import "./style.css";
-import profilePic from "./assetts/avatar-2092113_640.png";
 import { useState, useEffect } from "react";
+import Login from "./assetts/LoginComponent/LoginComponent";
+import Lists from "./assetts/ListsComponent/ListsComponent";
+import Tasks from "./assetts/TasksComponent/TasksComponent";
 
 export default function App() {
+  function getRandom() {
+    return Math.random();
+  }
+
+  // useState to store tasks passed by user, items's properties include, on top of id (used to define the unique key) and the value, the list in which the task belongs, and a boolean value to set the task completed and add appropriate style.
+  const [tasks, setTasks] = useState(() => {
+    const localValue = localStorage.getItem("TASKS");
+    if (localValue == null) {
+      const initialTasks = [
+        { value: "Do laundry", list: "My Day", isDone: false },
+        { value: "Perform test on app", list: "Work", isDone: false },
+        { value: "Buy milk, cereal, pasta", list: "Groceries", isDone: true },
+        { value: "Gym 16/18", list: "My Day", isDone: false },
+      ];
+      initialTasks.forEach((task) => {
+        task.id = getRandom();
+      });
+      return initialTasks;
+    }
+    return JSON.parse(localValue);
+  });
+  // store the value passed to the input element from the user, to add a task
   const [taskInputValue, setTaskInputValue] = useState("");
-  const [tasks, setTasks] = useState([]);
+
+  // Same logic of the tasks used for the lists
+  const [lists, setLists] = useState(() => {
+    const localValue = localStorage.getItem("LISTS");
+    if (localValue == null) {
+      const initialLists = [
+        { id: 0, value: "All" },
+        { id: 1, value: "My Day" },
+        { value: "Work" },
+        { value: "Groceries" },
+      ];
+      initialLists.forEach((list) => {
+        if (list.id === undefined) list.id = getRandom();
+      });
+      return initialLists;
+    }
+    return JSON.parse(localValue);
+  });
+  // store the value passed to the input element from the user, to add a list
   const [listInputValue, setListInputValue] = useState("");
-  const [lists, setLists] = useState([
-    { id: 0, value: "All" },
-    { id: 1, value: "My Day" },
-  ]);
+
+  // state used to managed the tasks rendered based on the list that is selected
   const [selectedList, setSelectedList] = useState("All");
   const [filteredTasks, setFilteredTasks] = useState([]);
 
+  // state used to simulate a login behaviour to show the app just after the 'TEST' button is clicked
+  const [isLoggedIn, setLoggedIn] = useState(() => {
+    const localValue = localStorage.getItem("isLoggedIn");
+    return localValue === "true";
+  });
+
+  // state to control the dropdown menu of the form
+  const [isActive, setIsActive] = useState(false);
+
+  const [showComponent, setShowComponent] = useState(window.innerWidth > 700);
+
+  const toggleComponent = () => {
+    setShowComponent(!showComponent);
+  };
+
+  // Effect used to store data in the local storage
+  useEffect(() => {
+    localStorage.setItem("isLoggedIn", isLoggedIn);
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    localStorage.setItem("TASKS", JSON.stringify(tasks));
+  }, [tasks]);
+  useEffect(() => {
+    localStorage.setItem("LISTS", JSON.stringify(lists));
+  }, [lists]);
   const date = Date().slice(0, 15);
 
   useEffect(() => {
@@ -23,135 +93,122 @@ export default function App() {
     }
   }, [tasks, selectedList]);
 
+  // Generic function to set a value
   function handleInput(e, setterFunction) {
     setterFunction(e.target.value);
   }
 
-  function handleSubmit(e, setterFunctionClear, setterFunctionAdd, input) {
+  // Generic function used when user submit tasks or lists
+  function handleSubmit(
+    e,
+    setterFunctionClear,
+    setterFunctionAdd,
+    input,
+    itemType
+  ) {
     e.preventDefault();
-    setterFunctionAdd((arr) => [
-      ...arr,
-      { id: Math.random(), value: input, list: selectedList },
-    ]);
+    if (input === "") return;
+    if (itemType === "task") {
+      setterFunctionAdd((arr) => [
+        ...arr,
+        { id: Math.random(), value: input, list: selectedList, isDone: false },
+      ]);
+    } else if (itemType === "list") {
+      setterFunctionAdd((arr) => [...arr, { id: Math.random(), value: input }]);
+    }
     setterFunctionClear("");
   }
 
+  // Function used to delete lists or tasks
   function handleDelete(arr, id, setterFunction, tasksSetterFunction) {
-    // Filter out the list to be deleted
-    const updatedLists = arr.filter((el) => el.id !== id);
-    // Delete tasks associated with the list
-    const updatedTasks = tasks.filter(
-      (task) => task.list !== arr.find((el) => el.id === id).value
-    );
+    const deletedItem = arr.find((item) => item.id === id);
+    const updatedItems = arr.filter((item) => item.id !== id);
 
-    // Update the state with the modified lists and tasks
-    setterFunction(updatedLists);
-    tasksSetterFunction(updatedTasks);
+    setterFunction(updatedItems);
+
+    if (deletedItem.value === selectedList) {
+      setSelectedList("All");
+    }
+
+    if (tasksSetterFunction) {
+      const updatedTasks = tasks.filter(
+        (task) => task.list !== deletedItem.value
+      );
+      tasksSetterFunction(updatedTasks);
+    }
   }
-
+  // function use to change beetween list and display the appropriate tasks
   function handleSelectChange(e) {
-    setSelectedList(e.target.value);
+    setSelectedList(e.target.textContent);
+    setIsActive(false);
   }
 
+  // function to set task completed
+  function handleTaskClick(taskId) {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId ? { ...task, isDone: !task.isDone } : task
+      )
+    );
+  }
+
+  // function that simulate a login process
+  function handleTestClick() {
+    setLoggedIn([true]);
+  }
+  function truncText(text, maxLength = null) {
+    if (maxLength === null) {
+      const screenWidth = window.innerWidth;
+      maxLength = Math.floor(screenWidth / 14);
+    }
+
+    return text.length > maxLength
+      ? `${text.substring(0, maxLength)}...`
+      : text;
+  }
   return (
-    <div className="container">
-      <div className="wrapper todo-controller">
-        <div className="section section-header todo-controller-header">
-          <img src={profilePic}></img>
-          <p>Jack Sparrow</p>
-        </div>
-        <div className="section section-main todo-controller-main">
-          <ul>
-            {lists.map((list) => {
-              if (list.id === 0 || list.id === 1) {
-                return (
-                  <li key={list.id}>
-                    <p onClick={() => setSelectedList(list.value)}>
-                      {list.value}
-                    </p>
-                  </li>
-                );
-              } else
-                return (
-                  <li key={list.id}>
-                    <p onClick={() => setSelectedList(list.value)}>
-                      {list.value}
-                    </p>
-                    <button
-                      className="remove-btn"
-                      onClick={() =>
-                        handleDelete(lists, list.id, setLists, setTasks)
-                      }
-                    >
-                      <i className="fa-solid fa-trash"></i>
-                    </button>
-                  </li>
-                );
-            })}
-          </ul>
-        </div>
-        <form
-          className="section todo-controller-form"
-          onSubmit={(e) =>
-            handleSubmit(e, setListInputValue, setLists, listInputValue)
-          }
-        >
-          <button type="submit">+</button>
-          <input
-            type="text"
-            placeholder="Add a List"
-            value={listInputValue}
-            onChange={(e) => handleInput(e, setListInputValue)}
-          />
-        </form>
-      </div>
-      <div className="wrapper todo-main">
-        <div className="section section-header todo-main-header">
-          <h1>{selectedList}</h1>
-          <p>{date.slice(0, 15)}</p>
-        </div>
-        <div className="section section-main todo-main-list">
-          <ul>
-            {filteredTasks.map((task) => (
-              <li key={task.id}>
-                <label>
-                  <input type="checkbox"></input>
-                  <p id="task">{task.value}</p>
-                  <p id="list">{task.list}</p>
-                  <button
-                    className="remove-btn"
-                    onClick={() => handleDelete(tasks, task.id, setTasks)}
-                  >
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <form
-          className="section todo-main-form"
-          onSubmit={(e) =>
-            handleSubmit(e, setTaskInputValue, setTasks, taskInputValue)
-          }
-        >
-          <button type="submit" className="btn btn-add">
-            +
+    <>
+      {!isLoggedIn && <Login handleTestClick={handleTestClick} />}
+      {isLoggedIn && (
+        <div className="wrapper">
+          <button className="toggle-button" onClick={toggleComponent}>
+            <span className="fas fa-bars"></span>
           </button>
-          <input
-            className="add-input"
-            type="text"
-            placeholder="Add a new Task"
-            value={taskInputValue}
-            onChange={(e) => handleInput(e, setTaskInputValue)}
+          <Lists
+            lists={lists}
+            setLists={setLists}
+            listInputValue={listInputValue}
+            setListInputValue={setListInputValue}
+            setSelectedList={setSelectedList}
+            handleDelete={handleDelete}
+            handleSubmit={handleSubmit}
+            handleInput={handleInput}
+            setTasks={setTasks}
+            showComponent={showComponent}
+            setShowComponent={setShowComponent}
+            toggleComponent={toggleComponent}
           />
-          <select value={selectedList} onChange={handleSelectChange}>
-            {lists.map((listItem) => (
-              <option key={listItem.id}>{listItem.value}</option>
-            ))}
-          </select>
-        </form>
-      </div>
-    </div>
+          <Tasks
+            date={date}
+            tasks={tasks}
+            setTasks={setTasks}
+            taskInputValue={taskInputValue}
+            setTaskInputValue={setTaskInputValue}
+            filteredTasks={filteredTasks}
+            lists={lists}
+            selectedList={selectedList}
+            handleInput={handleInput}
+            handleSubmit={handleSubmit}
+            handleSelectChange={handleSelectChange}
+            handleTaskClick={handleTaskClick}
+            handleDelete={handleDelete}
+            isActive={isActive}
+            setIsActive={setIsActive}
+            showComponent={showComponent}
+            toggleComponent={toggleComponent}
+          />
+        </div>
+      )}
+    </>
   );
 }
