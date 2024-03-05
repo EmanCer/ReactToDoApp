@@ -1,0 +1,94 @@
+/* ------- Lists Component Style --------- */
+.lists-component {
+  flex: 0 0 20%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--main-dark);
+  color: var(--accent);
+  padding: 3rem 0 0 1rem;
+}
+
+.lists-component-main {
+  flex: 1;
+  overflow: scroll;
+}
+
+.lists-component-header {
+  text-align: center;
+  flex: 0 0 auto;
+  height: 100px;
+}
+.lists-component-header img {
+  width: 50px;
+}
+
+.lists-component-main ul {
+  list-style: none;
+  padding: 2rem 0.5rem;
+}
+.lists-component-main ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 3rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid var(--secondary-blue);
+  margin-bottom: 0.5rem;
+}
+.lists-component-main ul li div {
+  width: 100%;
+}
+.lists-component-main ul li:hover {
+  background-color: var(--secondary-dark);
+}
+.lists-component-main u li p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lists-component-main ul li button {
+  flex-shrink: 0;
+  text-align: end;
+}
+
+.lists-component-form {
+  flex: 0 0 auto;
+  display: flex;
+  margin: 0 1rem 3rem 0;
+  border-top: 1px solid var(--secondary-blue);
+}
+
+.lists-component-form input {
+  flex: 1;
+  border: none;
+  border-radius: 0 0 10px 0;
+  background-color: var(--secondary-dark);
+  color: var(--accent);
+  outline: none;
+}
+.lists-component-form button {
+  background-color: var(--secondary-dark);
+  border: none;
+  color: grey;
+  border-radius: 0 0 0 10px;
+  padding: 1rem;
+}
+@media screen and (max-width: 700px) {
+  .lists-component {
+    display: none;
+  }
+  .lists-component.active {
+    display: flex;
+    flex: 1;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .lists-component {
+    flex-basis: 10%;
+  }
+}

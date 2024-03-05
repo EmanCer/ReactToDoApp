@@ -1,0 +1,121 @@
+/* ------- Tasks Component Style --------- */
+.tasks-component {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-image: url("../img/pexels-pixabay-164175.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.tasks-component-header {
+  padding: 2rem 2rem;
+  text-align: end;
+}
+.tasks-component-main {
+  flex: 1;
+  padding: 2rem 1rem;
+  margin-top: 2rem;
+  overflow-y: scroll;
+}
+.tasks-component-main li {
+  display: flex;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  background-color: var(--main-dark);
+  border-radius: 5px;
+  border: 1px solid var(--main-blue);
+  color: var(--accent);
+}
+.tasks-component-main li:hover {
+  background-color: var(--secondary-dark);
+  border-color: var(--secondary-blue);
+}
+.tasks-component-main li label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.tasks-component-main li label input[type="checkbox"] {
+  display: none;
+}
+.tasks-component-main li label #task {
+  flex: 1 1 auto;
+}
+.tasks-component-main li label #list {
+  color: var(--secondary-blue);
+}
+.tasks-component-main li label p {
+  overflow: hidden;
+}
+.tasks-component-main li label .active {
+  text-decoration: line-through;
+  color: var(--checked);
+}
+
+.tasks-component-form {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 1rem 2rem 3rem 2rem;
+  background-color: rgba(51, 102, 156, 0.15);
+}
+.tasks-component-form input {
+  border: none;
+  background-color: var(--main-dark);
+  padding: 1rem;
+  flex: 1;
+  color: var(--accent);
+  outline: none;
+}
+
+.tasks-components-dropdown {
+  flex: 0 1 10%;
+  padding: 0.8rem;
+  border-radius: 0 5px 5px 0;
+  background-color: var(--main-dark);
+  color: grey;
+  font-family: "Barlow", sans-serif;
+}
+.tasks-components-dropdown ul {
+  list-style: none;
+}
+.tasks-components-dropdown .dropdown-btn {
+  text-align: center;
+}
+.tasks-components-dropdown .dropdown-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  background-color: var(--main-dark);
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  text-align: center;
+  z-index: 2;
+  overflow: scroll;
+}
+.tasks-components-dropdown .dropdown-content .dropdown-content-header {
+  font-size: 2rem;
+  color: var(--accent);
+  padding: 2rem;
+}
+.tasks-components-dropdown .dropdown-content li {
+  padding: 10px;
+  cursor: pointer;
+}
+.tasks-components-dropdown .dropdown-content li:hover {
+  background-color: var(--secondary-dark);
+}
+@media screen and (max-width: 700px) {
+  .tasks-component.inactive {
+    flex: 0;
+    width: 0;
+    overflow: hidden;
+  }
+}

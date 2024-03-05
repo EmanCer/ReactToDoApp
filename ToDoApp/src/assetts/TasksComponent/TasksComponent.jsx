@@ -1,5 +1,6 @@
 import Task from "../TaskItemComponent/TaskItemComponents";
 import SelectComponent from "../SelectComponent";
+import "./TasksComponent.css";
 
 export default function Tasks({
   date,
@@ -21,7 +22,7 @@ export default function Tasks({
     <div
       className={`tasks-component  ${showComponent ? "inactive" : "active"}`}
     >
-      <div className="tasks-component-header header">
+      <div className="tasks-component-header">
         <h1>{selectedList}</h1>
         <p>{date.slice(0, 15)}</p>
       </div>
@@ -40,12 +41,12 @@ export default function Tasks({
         </ul>
       </div>
       <form
-        className="tasks-component-form form"
+        className="tasks-component-form"
         onSubmit={(e) =>
           handleSubmit(e, setTaskInputValue, setTasks, taskInputValue, "task")
         }
       >
-        <button type="submit" className="btn btn-add">
+        <button type="submit" className="btn">
           +
         </button>
         <input

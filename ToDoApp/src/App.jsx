@@ -4,15 +4,12 @@
 
 import "./style.css";
 import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Login from "./assetts/LoginComponent/LoginComponent";
 import Lists from "./assetts/ListsComponent/ListsComponent";
 import Tasks from "./assetts/TasksComponent/TasksComponent";
 
 export default function App() {
-  function getRandom() {
-    return Math.random();
-  }
-
   // useState to store tasks passed by user, items's properties include, on top of id (used to define the unique key) and the value, the list in which the task belongs, and a boolean value to set the task completed and add appropriate style.
   const [tasks, setTasks] = useState(() => {
     const localValue = localStorage.getItem("TASKS");
@@ -24,7 +21,7 @@ export default function App() {
         { value: "Gym 16/18", list: "My Day", isDone: false },
       ];
       initialTasks.forEach((task) => {
-        task.id = getRandom();
+        task.id = generateUniqueId();
       });
       return initialTasks;
     }
@@ -44,7 +41,7 @@ export default function App() {
         { value: "Groceries" },
       ];
       initialLists.forEach((list) => {
-        if (list.id === undefined) list.id = getRandom();
+        if (list.id === undefined) list.id = generateUniqueId();
       });
       return initialLists;
     }
@@ -66,8 +63,8 @@ export default function App() {
   // state to control the dropdown menu of the form
   const [isActive, setIsActive] = useState(false);
 
+  // state that manage the sidebar based on user screen width
   const [showComponent, setShowComponent] = useState(window.innerWidth > 700);
-
   const toggleComponent = () => {
     setShowComponent(!showComponent);
   };
@@ -93,6 +90,10 @@ export default function App() {
     }
   }, [tasks, selectedList]);
 
+  function generateUniqueId() {
+    return uuidv4();
+  }
+
   // Generic function to set a value
   function handleInput(e, setterFunction) {
     setterFunction(e.target.value);
@@ -111,10 +112,18 @@ export default function App() {
     if (itemType === "task") {
       setterFunctionAdd((arr) => [
         ...arr,
-        { id: Math.random(), value: input, list: selectedList, isDone: false },
+        {
+          id: generateUniqueId(),
+          value: input,
+          list: selectedList,
+          isDone: false,
+        },
       ]);
     } else if (itemType === "list") {
-      setterFunctionAdd((arr) => [...arr, { id: Math.random(), value: input }]);
+      setterFunctionAdd((arr) => [
+        ...arr,
+        { id: generateUniqueId(), value: input },
+      ]);
     }
     setterFunctionClear("");
   }

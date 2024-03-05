@@ -1,5 +1,6 @@
 import profilePic from "../../assetts/img/avatar-2092113_640.png";
 import List from "../ListComponent/ListComponent";
+import "./ListsComponent.css";
 
 export default function Lists({
   lists,
@@ -13,7 +14,6 @@ export default function Lists({
   setTasks,
   showComponent,
   toggleComponent,
-  truncText,
 }) {
   return (
     <div className={`lists-component ${showComponent ? "active" : ""}`}>

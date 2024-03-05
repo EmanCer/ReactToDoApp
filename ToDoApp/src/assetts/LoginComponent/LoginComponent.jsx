@@ -1,4 +1,5 @@
 import React from "react";
+import "./LoginComponent.css";
 
 export default function Login({ handleTestClick }) {
   return (
